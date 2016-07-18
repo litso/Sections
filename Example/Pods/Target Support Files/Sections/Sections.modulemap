@@ -1,0 +1,6 @@
+framework module Sections {
+  umbrella header "Sections-umbrella.h"
+
+  export *
+  module * { export * }
+}
