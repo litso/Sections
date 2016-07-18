@@ -1,0 +1,6 @@
+use_frameworks!
+target 'Sections_Tests' do
+  pod 'Sections', :path => '../'
+  
+  
+end
