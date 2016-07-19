@@ -17,22 +17,22 @@ public struct Section<T> {
     }
 }
 
-public struct BuildSection<T> {
-    public typealias SectionClosure = ([T]) -> Section<T>?
-    private var sectionClosures: [SectionClosure] = []
+public struct SectionBuilder<T> {
+    public typealias SectionsClosure = ([T]) -> [Section<T>]
+    private var sectionClosures: [SectionsClosure] = []
     public var values: [T]
 
     public var sections: [Section<T>] {
-        return sectionClosures.flatMap { $0(values) }
+        return sectionClosures.flatMap { $0(self.values) }
     }
 
-    public func addSection(f: SectionClosure) -> BuildSection<T> {
+    public func addSections(f: SectionsClosure) -> SectionBuilder<T> {
         var sections = self
         sections.sectionClosures.append(f)
         return sections
     }
 
-    public init(values: [T]) {
-        self.values = values
+    public init(initialValues: [T]) {
+        self.values = initialValues
     }
 }
