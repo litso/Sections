@@ -36,3 +36,19 @@ public struct SectionBuilder<T> {
         self.values = initialValues
     }
 }
+
+extension SectionBuilder where T: Equatable {
+    /**
+     Find index path for value.
+
+     - parameter value: Value to find.
+
+     - returns: Index path of match or nil.
+     */
+    public func indexPathOfValue(value: T) -> NSIndexPath? {
+        guard let sectionIndex = sections.indexOf({ $0.rows.contains(value) }) else { return nil }
+        guard let rowIndex = sections[sectionIndex].rows.indexOf(value) else { return nil }
+
+        return NSIndexPath(forRow: rowIndex, inSection: sectionIndex)
+    }
+}
