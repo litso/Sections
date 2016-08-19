@@ -54,4 +54,30 @@ class EquatableTests: XCTestCase {
         XCTAssert(sections.indexPathOfValue(b) == NSIndexPath(forItem: 0, inSection: 1))
         XCTAssert(sections.indexPathOfValue(c) == NSIndexPath(forItem: 1, inSection: 1))
     }
+
+    func testSectionIndexable() {
+        func testIndexPathOfValue() {
+            let a = EquatableType(val: "First Value")
+            let b = EquatableType(val: "Second Value")
+            let c = EquatableType(val: "Third Value")
+
+            var values = [ a, b, c]
+
+            let sectionBuilder = SectionBuilder<EquatableType>(initialValues: []).addSections { _ in
+                return [Section(name: "First Section", rows: [values[0]])]
+                }.addSections { _ in
+                    return [Section(name: "Second Section", rows: [values[1], values[2]])]
+            }
+
+            let sections = sectionBuilder.sections
+
+            XCTAssert(sectionBuilder.sections.count == 2)
+            XCTAssert(sectionBuilder.sections[0].rows[0] == a)
+            XCTAssert(sectionBuilder.sections[1].rows[1] == c)
+
+
+            XCTAssert(indexPathForSection(sections, inRow: a) == NSIndexPath(forItem: 0, inSection: 0))
+            XCTAssert(indexPathForSection(sections, inRow: c) == NSIndexPath(forItem: 1, inSection: 1))
+        }
+    }
 }

@@ -17,6 +17,16 @@ public struct Section<T> {
     }
 }
 
+public func indexPathForSection<T: Equatable>(array: [Section<T>], inRow row: T) -> NSIndexPath? {
+    for (sectionIndex, section) in array.enumerate() {
+        if let rowIndex = section.rows.indexOf(row) {
+            return NSIndexPath(forRow: rowIndex, inSection: sectionIndex)
+        }
+    }
+
+    return nil
+}
+
 public struct SectionBuilder<T> {
     public typealias SectionsClosure = ([T]) -> [Section<T>]
     private var sectionClosures: [SectionsClosure] = []
