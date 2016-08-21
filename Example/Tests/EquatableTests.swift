@@ -75,9 +75,8 @@ class EquatableTests: XCTestCase {
             XCTAssert(sectionBuilder.sections[0].rows[0] == a)
             XCTAssert(sectionBuilder.sections[1].rows[1] == c)
 
-
-            XCTAssert(indexPathForSection(sections, inRow: a) == NSIndexPath(forItem: 0, inSection: 0))
-            XCTAssert(indexPathForSection(sections, inRow: c) == NSIndexPath(forItem: 1, inSection: 1))
+            XCTAssert(sections.indexPathForRow(a) == NSIndexPath(forItem: 0, inSection: 0))
+            XCTAssert(sections.indexPathForRow(a) == NSIndexPath(forItem: 1, inSection: 1))
         }
     }
 }

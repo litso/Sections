@@ -14,13 +14,11 @@ class SectionsTests: XCTestCase {
         let a = MyType(val: "First Value")
         let b = MyType(val: "Second Value")
 
-        var sections = SectionBuilder<MyType>(initialValues: []).addSections { values in
-            return [Section(name: "First", rows: [values[0]])]
-            }.addSections { values in
-                return [Section(name: "Second", rows: [values[1]])]
+        let sections = SectionBuilder<MyType>(initialValues: []).addSections { _ in
+            return [Section<MyType>(name: "First", rows: [a])]
+            }.addSections { _ in
+                return [Section(name: "Second", rows: [b])]
         }
-
-        sections.values = [ a, b]
 
         XCTAssert(sections.sections.count == 2)
 
@@ -41,16 +39,14 @@ class SectionsTests: XCTestCase {
         let b = MyType(val: "Second Value")
         let c = MyType(val: "Third Value")
 
-        var values = [a, b]
+        var values = [a, b, c]
 
         let sections = SectionBuilder<MyType>(initialValues: []).addSections { _ in
             return [Section(name: "First", rows: [values[0]])]
             }.addSections { _ in
-                return [Section(name: "Second", rows: [values[1]])]
-                    + [Section(name: "Third", rows: [values[2]])]
+                return [Section<MyType>(name: "Second", rows: [values[1]])]
+                    + [Section<MyType>(name: "Third", rows: [values[2]])]
         }
-
-        values = [ a, b, c]
 
         XCTAssert(sections.sections.count == 3)
 

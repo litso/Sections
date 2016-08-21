@@ -9,7 +9,7 @@ import Foundation
 
 public struct Section<T> {
     public let name: String
-    public let rows: [T]
+    public var rows: [T]
 
     public init (name: String, rows: [T]) {
         self.name = name
@@ -17,48 +17,67 @@ public struct Section<T> {
     }
 }
 
-public func indexPathForSection<T: Equatable>(array: [Section<T>], inRow row: T) -> NSIndexPath? {
-    for (sectionIndex, section) in array.enumerate() {
-        if let rowIndex = section.rows.indexOf(row) {
-            return NSIndexPath(forRow: rowIndex, inSection: sectionIndex)
+public struct Sections<T> {
+    var sections: [Section<T>]
+    init(sections: [Section<T>]) {
+        self.sections = sections
+    }
+}
+
+extension Sections where T: Equatable {
+    public func indexPathForRow(row: T) -> NSIndexPath? {
+        for (sectionIndex, section) in sections.enumerate() {
+            if let rowIndex = section.rows.indexOf(row) {
+                return NSIndexPath(forRow: rowIndex, inSection: sectionIndex)
+            }
+        }
+        return nil
+    }
+
+}
+extension Sections: SequenceType {
+    public typealias Generator = AnyGenerator<Section<T>>
+
+    public func generate() -> Sections.Generator {
+        let g = sections.generate()
+        return AnyGenerator(g)
+    }
+}
+
+extension Sections: CollectionType {
+    public typealias Index = Int
+
+    public var startIndex: Int {
+        return 0
+    }
+
+    public var endIndex: Int {
+        return sections.count
+    }
+
+    public subscript(i: Int) -> Section<T> {
+        get {
+            return sections[i]
+        }
+        set {
+            sections[i] = newValue
         }
     }
-
-    return nil
 }
 
-public struct SectionBuilder<T> {
-    public typealias SectionsClosure = ([T]) -> [Section<T>]
-    private var sectionClosures: [SectionsClosure] = []
-    public var values: [T]
-
-    public var sections: [Section<T>] {
-        return sectionClosures.flatMap { $0(self.values) }
-    }
-
-    public func addSections(f: SectionsClosure) -> SectionBuilder<T> {
-        var sections = self
-        sections.sectionClosures.append(f)
-        return sections
-    }
-
-    public init(initialValues: [T]) {
-        self.values = initialValues
+extension Sections: ArrayLiteralConvertible {
+    public typealias Element = Section<T>
+    public init(arrayLiteral elements: Sections.Element...) {
+        self.sections = elements
     }
 }
 
-extension SectionBuilder where T: Equatable {
-    /**
-     Find index path for value.
+extension Sections: RangeReplaceableCollectionType {
+    public init() {
+        self.sections = []
+    }
 
-     - parameter value: Value to find.
-
-     - returns: Index path of match or nil.
-     */
-    public func indexPathOfValue(value: T) -> NSIndexPath? {
-        guard let sectionIndex = sections.indexOf({ $0.rows.contains(value) }) else { return nil }
-        guard let rowIndex = sections[sectionIndex].rows.indexOf(value) else { return nil }
-
-        return NSIndexPath(forRow: rowIndex, inSection: sectionIndex)
+    public mutating func replaceRange<C : CollectionType where C.Generator.Element == Generator.Element>(subRange: Range<Sections.Index>, with newElements: C) {
+        self.sections.replaceRange(subRange, with: newElements)
     }
 }

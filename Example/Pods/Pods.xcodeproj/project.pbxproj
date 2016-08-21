@@ -13,6 +13,7 @@
 		4BA3C7B77DFFDDD6868D535D1AF58D0B /* Sections-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E456AA562F3BD5730896CF5CD73B3886 /* Sections-dummy.m */; };
 		9519298A7BAC2E0070FB2EC1FF26A39B /* Pods-Sections_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 77A96497DFDF9DEE91FF8E82475DD5D9 /* Pods-Sections_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AE028B2ACD8D0F38D4D80A4642233A77 /* Pods-Sections_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0849E0B4629CCD7F1279584DC27702D4 /* Pods-Sections_Tests-dummy.m */; };
+		AFB4514B1D69102C006CF21E /* SectionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB4514A1D69102C006CF21E /* SectionBuilder.swift */; };
 		EB3035B001E19A2B687219572ACB3EE2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +42,7 @@
 		A0486D51C2B9B23788077F4FAE8A1066 /* Pods-Sections_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Sections_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		AA4391DD83424B16B57FBF0C13228845 /* Sections.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = Sections.modulemap; sourceTree = "<group>"; };
 		AE4A1AA64A1D74F0149326ABA5EE3FE6 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AFB4514A1D69102C006CF21E /* SectionBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionBuilder.swift; sourceTree = "<group>"; };
 		BB0C78F4E5B4E61E53FEB741A749D6E2 /* Sections.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Sections.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5E785BE3E83EAC39DB13F75D3C7BBE7 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -100,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				DCD2CF0620C3EB747AF82645221B31F2 /* Sections.swift */,
+				AFB4514A1D69102C006CF21E /* SectionBuilder.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -277,6 +280,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFB4514B1D69102C006CF21E /* SectionBuilder.swift in Sources */,
 				039B2A3BFE479923D5204A297E88F2D0 /* Sections.swift in Sources */,
 				4BA3C7B77DFFDDD6868D535D1AF58D0B /* Sections-dummy.m in Sources */,
 			);
