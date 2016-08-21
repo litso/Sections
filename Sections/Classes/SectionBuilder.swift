@@ -14,7 +14,7 @@ public struct SectionBuilder<T> {
     public var values: Sections<T>
 
     public var sections: Sections<T> {
-        var values = sectionClosures.flatMap { $0(self.values) }
+        let values = sectionClosures.flatMap { $0(self.values) }
         return Sections<T>(sections: values)
     }
 
