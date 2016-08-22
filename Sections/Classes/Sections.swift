@@ -18,8 +18,8 @@ public struct Section<T> {
 }
 
 public struct Sections<T> {
-    var sections: [Section<T>]
-    init(sections: [Section<T>]) {
+    public var sections: [Section<T>]
+    public init(sections: [Section<T>]) {
         self.sections = sections
     }
 }
