@@ -15,7 +15,7 @@ public struct SectionBuilder<T> {
 
     public var sections: Sections<T> {
         let values = sectionClosures.flatMap { $0(self.values) }
-        return Sections<T>(sections: values as! [Section<T>])
+        return Sections<T>(sections: values)
     }
 
     public func addSections(_ f: @escaping SectionsClosure) -> SectionBuilder<T> {
