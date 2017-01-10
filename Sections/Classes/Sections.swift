@@ -25,34 +25,34 @@ public struct Sections<T> {
 }
 
 extension Sections where T: Equatable {
-    public func indexPathForRow(row: T) -> NSIndexPath? {
-        for (sectionIndex, section) in sections.enumerate() {
-            if let rowIndex = section.rows.indexOf(row) {
-                return NSIndexPath(forRow: rowIndex, inSection: sectionIndex)
+    public func indexPathForRow(_ row: T) -> IndexPath? {
+        for (sectionIndex, section) in sections.enumerated() {
+            if let rowIndex = section.rows.index(of: row) {
+                return IndexPath(row: rowIndex, section: sectionIndex)
             }
         }
         return nil
     }
 
 }
-extension Sections: SequenceType {
-    public typealias Generator = AnyGenerator<Section<T>>
+extension Sections: Sequence {
+    public typealias Iterator = AnyIterator<Section<T>>
 
-    public func generate() -> Sections.Generator {
-        let g = sections.generate()
-        return AnyGenerator(g)
+    public func makeIterator() -> Sections.Iterator {
+        let g = sections.makeIterator()
+        return AnyIterator(g)
     }
 }
 
-extension Sections: CollectionType {
+extension Sections: Collection {
     public typealias Index = Int
 
     public var startIndex: Int {
-        return 0
+        return sections.startIndex
     }
 
     public var endIndex: Int {
-        return sections.count
+        return sections.endIndex
     }
 
     public subscript(i: Int) -> Section<T> {
@@ -63,21 +63,25 @@ extension Sections: CollectionType {
             sections[i] = newValue
         }
     }
+
+    public func index(after i: Index) -> Index {
+        return sections.index(after: i)
+    }
 }
 
-extension Sections: ArrayLiteralConvertible {
+extension Sections: ExpressibleByArrayLiteral {
     public typealias Element = Section<T>
     public init(arrayLiteral elements: Sections.Element...) {
         self.sections = elements
     }
 }
 
-extension Sections: RangeReplaceableCollectionType {
+extension Sections: RangeReplaceableCollection {
     public init() {
         self.sections = []
     }
 
-    public mutating func replaceRange<C : CollectionType where C.Generator.Element == Generator.Element>(subRange: Range<Sections.Index>, with newElements: C) {
-        self.sections.replaceRange(subRange, with: newElements)
+    public mutating func replaceSubrange<C : Collection>(_ subRange: Range<Sections.Index>, with newElements: C) where C.Iterator.Element == Iterator.Element {
+        self.sections.replaceSubrange(subRange, with: newElements)
     }
 }
