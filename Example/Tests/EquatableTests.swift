@@ -50,9 +50,9 @@ class EquatableTests: XCTestCase {
         XCTAssert(sections.sections[1].rows[1] == c)
 
 
-        XCTAssert(sections.indexPathOfValue(a) == NSIndexPath(forItem: 0, inSection: 0))
-        XCTAssert(sections.indexPathOfValue(b) == NSIndexPath(forItem: 0, inSection: 1))
-        XCTAssert(sections.indexPathOfValue(c) == NSIndexPath(forItem: 1, inSection: 1))
+        XCTAssert(sections.indexPathOfValue(a) == IndexPath(item: 0, section: 0))
+        XCTAssert(sections.indexPathOfValue(b) == IndexPath(item: 0, section: 1))
+        XCTAssert(sections.indexPathOfValue(c) == IndexPath(item: 1, section: 1))
     }
 
     func testSectionIndexable() {
@@ -75,8 +75,8 @@ class EquatableTests: XCTestCase {
             XCTAssert(sectionBuilder.sections[0].rows[0] == a)
             XCTAssert(sectionBuilder.sections[1].rows[1] == c)
 
-            XCTAssert(sections.indexPathForRow(a) == NSIndexPath(forItem: 0, inSection: 0))
-            XCTAssert(sections.indexPathForRow(a) == NSIndexPath(forItem: 1, inSection: 1))
+            XCTAssert(sections.indexPathForRow(a) == IndexPath(item: 0, section: 0))
+            XCTAssert(sections.indexPathForRow(a) == IndexPath(item: 1, section: 1))
         }
     }
 }

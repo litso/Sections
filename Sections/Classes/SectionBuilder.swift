@@ -9,16 +9,16 @@
 import Foundation
 
 public struct SectionBuilder<T> {
-    public typealias SectionsClosure = Sections<T> -> Sections<T>
-    private var sectionClosures: [SectionsClosure] = []
+    public typealias SectionsClosure = (Sections<T>) -> Sections<T>
+    fileprivate var sectionClosures: [SectionsClosure] = []
     public var values: Sections<T>
 
     public var sections: Sections<T> {
         let values = sectionClosures.flatMap { $0(self.values) }
-        return Sections<T>(sections: values)
+        return Sections<T>(sections: values as! [Section<T>])
     }
 
-    public func addSections(f: SectionsClosure) -> SectionBuilder<T> {
+    public func addSections(_ f: @escaping SectionsClosure) -> SectionBuilder<T> {
         var sections = self
         sections.sectionClosures.append(f)
         return sections
@@ -37,10 +37,10 @@ extension SectionBuilder where T: Equatable {
 
      - returns: Index path of match or nil.
      */
-    public func indexPathOfValue(value: T) -> NSIndexPath? {
-        guard let sectionIndex = sections.indexOf({ $0.rows.contains(value) }) else { return nil }
-        guard let rowIndex = sections[sectionIndex].rows.indexOf(value) else { return nil }
+    public func indexPathOfValue(_ value: T) -> IndexPath? {
+        guard let sectionIndex = sections.index(where: { $0.rows.contains(value) }) else { return nil }
+        guard let rowIndex = sections[sectionIndex].rows.index(of: value) else { return nil }
 
-        return NSIndexPath(forRow: rowIndex, inSection: sectionIndex)
+        return IndexPath(row: rowIndex, section: sectionIndex)
     }
 }

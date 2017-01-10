@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Sections'
-  s.version          = '0.5.2'
+  s.version          = '0.6.0'
   s.summary          = 'Library for partitioning data into sections displayable in a TableView'
 
 # This description is used to generate tags and improve search results.
