@@ -1,6 +1,6 @@
 # Sections
 
-[![CI Status](http://img.shields.io/travis/Robert Manson/Sections.svg?style=flat)](https://travis-ci.org/Robert Manson/Sections)
+[![CI Status](http://img.shields.io/travis/Robert%20Manson/Sections.svg?style=flat)](https://travis-ci.org/Robert%20Manson/Sections)
 [![Version](https://img.shields.io/cocoapods/v/Sections.svg?style=flat)](http://cocoapods.org/pods/Sections)
 [![License](https://img.shields.io/cocoapods/l/Sections.svg?style=flat)](http://cocoapods.org/pods/Sections)
 [![Platform](https://img.shields.io/cocoapods/p/Sections.svg?style=flat)](http://cocoapods.org/pods/Sections)
