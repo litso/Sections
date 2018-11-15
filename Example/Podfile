@@ -1,6 +1,6 @@
+platform :ios, '10.0'
 use_frameworks!
+
 target 'Sections_Tests' do
   pod 'Sections', :path => '../'
-  
-  
 end

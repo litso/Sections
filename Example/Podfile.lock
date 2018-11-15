@@ -1,16 +1,16 @@
 PODS:
-  - Sections (0.1.0)
+  - Sections (0.8.0)
 
 DEPENDENCIES:
   - Sections (from `../`)
 
 EXTERNAL SOURCES:
   Sections:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
-  Sections: 306d15c090e344c9945c61d836105755f780bf51
+  Sections: cdc68c7bdd777650b348e0149736963f7165d218
 
-PODFILE CHECKSUM: b48f31f500417744815c2038fe47450e4ed1a119
+PODFILE CHECKSUM: a025d497c70780ec97ae6d32d608fdba07206039
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.5.3
