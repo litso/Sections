@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Sections'
-  s.version          = '0.7.0'
+  s.version          = '0.8.0'
   s.swift_version    = '4.2'
   s.summary          = 'Library for partitioning data into sections displayable in a TableView'
 

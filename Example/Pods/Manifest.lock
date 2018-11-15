@@ -1,5 +1,5 @@
 PODS:
-  - Sections (0.7.0)
+  - Sections (0.8.0)
 
 DEPENDENCIES:
   - Sections (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Sections: 21ff624c4cdb68ae16244617f88c8e8f9c2981ff
+  Sections: cdc68c7bdd777650b348e0149736963f7165d218
 
 PODFILE CHECKSUM: a025d497c70780ec97ae6d32d608fdba07206039
 
