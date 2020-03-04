@@ -27,7 +27,7 @@ public struct Sections<T> {
 extension Sections where T: Equatable {
     public func indexPathForRow(_ row: T) -> IndexPath? {
         for (sectionIndex, section) in sections.enumerated() {
-            if let rowIndex = section.rows.index(of: row) {
+            if let rowIndex = section.rows.firstIndex(of: row) {
                 return IndexPath(row: rowIndex, section: sectionIndex)
             }
         }

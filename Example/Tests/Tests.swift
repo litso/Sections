@@ -39,7 +39,7 @@ class SectionsTests: XCTestCase {
         let b = MyType(val: "Second Value")
         let c = MyType(val: "Third Value")
 
-        var values = [a, b, c]
+        let values = [a, b, c]
 
         let sections = SectionBuilder<MyType>(initialValues: []).addSections { _ in
             return [Section(name: "First", rows: [values[0]])]

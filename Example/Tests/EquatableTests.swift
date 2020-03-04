@@ -30,7 +30,7 @@ class EquatableTests: XCTestCase {
         let b = EquatableType(val: "Second Value")
         let c = EquatableType(val: "Third Value")
 
-        var values = [ a, b, c]
+        let values = [ a, b, c]
 
         let sections = SectionBuilder<EquatableType>(initialValues: []).addSections { _ in
             return [Section(name: "First Section", rows: [values[0]])]
@@ -61,7 +61,7 @@ class EquatableTests: XCTestCase {
             let b = EquatableType(val: "Second Value")
             let c = EquatableType(val: "Third Value")
 
-            var values = [ a, b, c]
+            let values = [ a, b, c]
 
             let sectionBuilder = SectionBuilder<EquatableType>(initialValues: []).addSections { _ in
                 return [Section(name: "First Section", rows: [values[0]])]

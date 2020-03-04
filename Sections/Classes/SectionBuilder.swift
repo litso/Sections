@@ -38,8 +38,8 @@ extension SectionBuilder where T: Equatable {
      - returns: Index path of match or nil.
      */
     public func indexPathOfValue(_ value: T) -> IndexPath? {
-        guard let sectionIndex = sections.index(where: { $0.rows.contains(value) }) else { return nil }
-        guard let rowIndex = sections[sectionIndex].rows.index(of: value) else { return nil }
+        guard let sectionIndex = sections.firstIndex(where: { $0.rows.contains(value) }) else { return nil }
+        guard let rowIndex = sections[sectionIndex].rows.firstIndex(of: value) else { return nil }
 
         return IndexPath(row: rowIndex, section: sectionIndex)
     }
