@@ -1,7 +1,7 @@
 {
   "name": "Sections",
   "version": "0.9.0",
-  "swift_versions": "5.0",
+  "swift_versions": "5.2",
   "summary": "Library for partitioning data into sections displayable in a TableView",
   "description": "Sections helps you partition arrays or other data structures into arrays of arrays with corresponding descriptions. This is useful for when you have named sections in your table view.",
   "homepage": "https://github.com/litso/Sections",
@@ -17,8 +17,8 @@
     "tag": "0.9.0"
   },
   "platforms": {
-    "ios": "12.2"
+    "ios": "13.3"
   },
   "source_files": "Sections/Classes/**/*",
-  "swift_version": "5.0"
+  "swift_version": "5.2"
 }
