@@ -9,8 +9,13 @@ import Foundation
 
 public struct Sections<T> {
     public var sections: [Section<T>]
+
     public init(sections: [Section<T>]) {
         self.sections = sections
+    }
+
+    public init(@SectionBuilder _ sections: () -> [Section<T>]) {
+        self.sections = sections()
     }
 }
 

@@ -13,4 +13,9 @@ public struct Section<T> {
         self.name = name
         self.rows = rows
     }
+
+    public init(name: String, @RowBuilder _ rows: () -> [T]) {
+        self.name = name
+        self.rows = rows()
+    }
 }
