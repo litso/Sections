@@ -19,13 +19,10 @@ final class SectionBuilderTests: XCTestCase {
     private let _true = true
 
     func testSingleExpressionClosure() {
-        // Single-expression closures don’t use function builders as of
-        // Swift 5.2. As a workaround, we can return an array of one row.
-        // See https://bugs.swift.org/browse/SR-11628
         let sections = Sections {
-            [Section(name: "the section") {
-                [Row(value: "the row")]
-            }]
+            Section(name: "the section") {
+                Row(value: "the row")
+            }
         }
 
         XCTAssertEqual(sections.count, 1)
@@ -119,7 +116,7 @@ final class SectionBuilderTests: XCTestCase {
         let sections0 = Sections {
             if _true {
                 Section(name: "section a") {
-                    [Row(value: "a")]
+                    Row(value: "a")
                 }
             }
         }
@@ -172,11 +169,11 @@ final class SectionBuilderTests: XCTestCase {
         let sections0 = Sections {
             if _true {
                 Section(name: "section a") {
-                    [Row(value: "a")]
+                    Row(value: "a")
                 }
             } else {
                 Section(name: "section b") {
-                    [Row(value: "b")]
+                    Row(value: "b")
                 }
             }
         }
@@ -187,11 +184,11 @@ final class SectionBuilderTests: XCTestCase {
         let sections1 = Sections {
             if _false {
                 Section(name: "section c") {
-                    [Row(value: "c")]
+                    Row(value: "c")
                 }
             } else {
                 Section(name: "section d") {
-                    [Row(value: "d")]
+                    Row(value: "d")
                 }
             }
         }
@@ -258,15 +255,15 @@ final class SectionBuilderTests: XCTestCase {
         let sections0 = Sections {
             if _true {
                 Section(name: "section a") {
-                    [Row(value: "a")]
+                    Row(value: "a")
                 }
             } else if _false {
                 Section(name: "section b") {
-                    [Row(value: "b")]
+                    Row(value: "b")
                 }
             } else {
                 Section(name: "section c") {
-                    [Row(value: "c")]
+                    Row(value: "c")
                 }
             }
         }
@@ -277,15 +274,15 @@ final class SectionBuilderTests: XCTestCase {
         let sections1 = Sections {
             if _false {
                 Section(name: "section d") {
-                    [Row(value: "d")]
+                    Row(value: "d")
                 }
             } else if _true {
                 Section(name: "section e") {
-                    [Row(value: "e")]
+                    Row(value: "e")
                 }
             } else {
                 Section(name: "section f") {
-                    [Row(value: "f")]
+                    Row(value: "f")
                 }
             }
         }
@@ -296,15 +293,15 @@ final class SectionBuilderTests: XCTestCase {
         let sections2 = Sections {
             if _false {
                 Section(name: "section g") {
-                    [Row(value: "g")]
+                    Row(value: "g")
                 }
             } else if _false {
                 Section(name: "section h") {
-                    [Row(value: "h")]
+                    Row(value: "h")
                 }
             } else {
                 Section(name: "section i") {
-                    [Row(value: "i")]
+                    Row(value: "i")
                 }
             }
         }

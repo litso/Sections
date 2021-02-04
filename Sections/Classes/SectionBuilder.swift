@@ -6,7 +6,7 @@
 //
 //
 
-@_functionBuilder
+@resultBuilder
 public struct SectionBuilder {
     public static func buildExpression<Row>(_ section: Section<Row>) -> [Section<Row>] {
         return [section]

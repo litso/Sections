@@ -19,11 +19,8 @@ final class RowBuilderTests: XCTestCase {
     private let _true = true
 
     func testSingleExpressionClosure() {
-        // Single-expression closures don’t use function builders as of
-        // Swift 5.2. As a workaround, we can return an array of one row.
-        // See https://bugs.swift.org/browse/SR-11628
         let section = Section(name: "the section") {
-            [Row(value: "the row")]
+            Row(value: "the row")
         }
 
         XCTAssertEqual(section.name, "the section")

@@ -5,7 +5,7 @@
 //  Created by Erik Strottmann on 6/17/20.
 //
 
-@_functionBuilder
+@resultBuilder
 public struct RowBuilder {
     public static func buildExpression<Row>(_ row: Row) -> [Row] {
         return [row]
