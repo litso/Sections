@@ -7,20 +7,15 @@
 
 import Foundation
 
-public struct Section<T> {
-    public let name: String
-    public var rows: [T]
-
-    public init (name: String, rows: [T]) {
-        self.name = name
-        self.rows = rows
-    }
-}
-
 public struct Sections<T> {
     public var sections: [Section<T>]
+
     public init(sections: [Section<T>]) {
         self.sections = sections
+    }
+
+    public init(@SectionBuilder _ sections: () -> [Section<T>]) {
+        self.sections = sections()
     }
 }
 
@@ -35,33 +30,22 @@ extension Sections where T: Equatable {
     }
 
 }
-extension Sections: Sequence {
-    public typealias Iterator = AnyIterator<Section<T>>
-
-    public func makeIterator() -> Sections.Iterator {
-        let g = sections.makeIterator()
-        return AnyIterator(g)
-    }
-}
 
 extension Sections: Collection {
+    public typealias Element = Section<T>
     public typealias Index = Int
 
-    public var startIndex: Int {
+    public var startIndex: Index {
         return sections.startIndex
     }
 
-    public var endIndex: Int {
+    public var endIndex: Index {
         return sections.endIndex
     }
 
-    public subscript(i: Int) -> Section<T> {
-        get {
-            return sections[i]
-        }
-        set {
-            sections[i] = newValue
-        }
+    public subscript(i: Index) -> Element {
+        get { sections[i] }
+        set { sections[i] = newValue }
     }
 
     public func index(after i: Index) -> Index {
@@ -69,19 +53,18 @@ extension Sections: Collection {
     }
 }
 
-extension Sections: ExpressibleByArrayLiteral {
-    public typealias Element = Section<T>
-    public init(arrayLiteral elements: Sections.Element...) {
-        self.sections = elements
+extension Sections: RangeReplaceableCollection {
+    public init() {
+        sections = []
+    }
+
+    public mutating func replaceSubrange<C>(_ subrange: Range<Index>, with newElements: C) where C: Collection, C.Element == Element {
+        sections.replaceSubrange(subrange, with: newElements)
     }
 }
 
-extension Sections: RangeReplaceableCollection {
-    public init() {
-        self.sections = []
-    }
-
-    public mutating func replaceSubrange<C : Collection>(_ subRange: Range<Sections.Index>, with newElements: C) where C.Iterator.Element == Iterator.Element {
-        self.sections.replaceSubrange(subRange, with: newElements)
+extension Sections: ExpressibleByArrayLiteral {
+    public init(arrayLiteral elements: Element...) {
+        sections = elements
     }
 }

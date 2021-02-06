@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'Sections'
   s.version          = '0.9.0'
-  s.swift_version    = '5.0'
+  s.swift_version    = '5.2'
   s.summary          = 'Library for partitioning data into sections displayable in a TableView'
 
 # This description is used to generate tags and improve search results.
@@ -29,7 +29,7 @@ Sections helps you partition arrays or other data structures into arrays of arra
   s.source           = { :git => 'https://github.com/litso/Sections.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '12.2'
+  s.ios.deployment_target = '13.3'
 
   s.source_files = 'Sections/Classes/**/*'
 
