@@ -17,7 +17,7 @@
     "tag": "0.9.0"
   },
   "platforms": {
-    "ios": "12.2"
+    "ios": "13.1"
   },
   "source_files": "Sections/Classes/**/*",
   "swift_version": "5.0"
