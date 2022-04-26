@@ -5,7 +5,7 @@
 //  Created by Robert Manson on 7/7/16.
 //
 
-import Foundation
+import UIKit
 
 public struct Section<T> {
     public let name: String
