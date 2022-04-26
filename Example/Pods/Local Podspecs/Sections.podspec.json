@@ -19,6 +19,6 @@
   "platforms": {
     "ios": "13.1"
   },
-  "source_files": "Sections/Classes/**/*",
+  "source_files": "Sources/Sections/Classes/**/*",
   "swift_version": "5.0"
 }

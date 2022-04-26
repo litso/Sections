@@ -23,5 +23,5 @@ Sections helps you partition arrays or other data structures into arrays of arra
 
   s.ios.deployment_target = '13.1'
 
-  s.source_files = 'Sections/Classes/**/*'
+  s.source_files = 'Sources/Sections/Classes/**/*'
 end
