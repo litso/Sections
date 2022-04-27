@@ -8,36 +8,20 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Sections'
-  s.version          = '0.9.0'
+  s.version          = '0.10.0'
   s.swift_version    = '5.0'
   s.summary          = 'Library for partitioning data into sections displayable in a TableView'
-
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
 Sections helps you partition arrays or other data structures into arrays of arrays with corresponding descriptions. This is useful for when you have named sections in your table view.
                        DESC
 
   s.homepage         = 'https://github.com/litso/Sections'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Robert Manson' => 'robmanson@gmail.com' }
   s.source           = { :git => 'https://github.com/litso/Sections.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '12.2'
+  s.ios.deployment_target = '13.1'
 
-  s.source_files = 'Sections/Classes/**/*'
-
-  # s.resource_bundles = {
-  #   'Sections' => ['Sections/Assets/*.png']
-  # }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.source_files = 'Sources/Sections/Classes/**/*'
 end

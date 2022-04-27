@@ -1,4 +1,4 @@
-platform :ios, '12.2'
+platform :ios, '13.1'
 use_frameworks!
 
 target 'Sections_Tests' do
