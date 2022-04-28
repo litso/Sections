@@ -1,0 +1,32 @@
+disabled_rules: # rule identifiers to exclude from running
+  - todo
+  - line_length
+  - large_tuple
+opt_in_rules:
+  - force_unwrapping
+file_length:
+  warning: 600
+identifier_name:
+  min_length: # only min_length
+    error: 2 # only error
+  excluded: # excluded via string array
+    - id
+    - f
+    - s
+    - i
+    - j
+    - x
+    - y
+    - vc
+    - to
+function_body_length:
+  - 60
+  - 60
+nesting:
+  type_level:
+    warning: 2
+private_over_fileprivate:
+    validate_extensions: true
+
+excluded:
+  - Example/Pods

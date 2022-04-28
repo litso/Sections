@@ -1,0 +1,28 @@
+version: 2.1
+jobs:
+  danger:
+    macos:
+      xcode: 13.2.1
+    working_directory: /Users/distiller/project
+    shell: /bin/bash --login -o pipefail
+    steps:
+      - checkout
+      - run: brew install mint
+      - run: mint bootstrap --link
+      - run:
+          name: Setup Environment Variables
+          command: |
+            echo 'export PATH=$HOME/.mint/bin:$PATH' >> $BASH_ENV
+      - run: swiftlint version
+      - run: brew tap danger/tap
+      - run: brew install danger/tap/danger-swift
+      - run:
+          name: Danger
+          command: danger-swift ci
+
+workflows:
+  version: 2
+  build-test-lint:
+    jobs:
+      - danger
+
