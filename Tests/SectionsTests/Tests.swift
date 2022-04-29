@@ -11,59 +11,58 @@ class SectionsTests: XCTestCase {
      Test creating two sections from a homogenious data type.
      */
     func testSections() {
-        let a = MyType(val: "First Value")
-        let b = MyType(val: "Second Value")
+        let rowA = MyType(val: "First Value")
+        let rowB = MyType(val: "Second Value")
 
-        let sections = SectionBuilder<MyType>(initialValues: []).addSections { _ in
-            return [Section<MyType>(name: "First", rows: [a])]
+        let sections = SectionBuilder<MyType>(initialValues: [])
+            .addSections { _ in
+                return [Section<MyType>(name: "First", rows: [rowA])]
             }.addSections { _ in
-                return [Section(name: "Second", rows: [b])]
-        }
+                return [Section(name: "Second", rows: [rowB])]
+            }
 
         XCTAssert(sections.sections.count == 2)
 
         XCTAssert(sections.sections[0].name == "First")
-        XCTAssert(sections.sections[0].rows[0] == a)
+        XCTAssert(sections.sections[0].rows[0] == rowA)
         XCTAssert(sections.sections[0].rows.count == 1)
 
         XCTAssert(sections.sections[1].name == "Second")
-        XCTAssert(sections.sections[1].rows[0] == b)
+        XCTAssert(sections.sections[1].rows[0] == rowB)
         XCTAssert(sections.sections[1].rows.count == 1)
     }
 
     /**
-     Test changing the `values` captured by the section build after the capture. Also test returning multiple sections in one closure.
+     Test returning multiple sections in one closure.
      */
     func testSections2() {
-        let a = MyType(val: "First Value")
-        let b = MyType(val: "Second Value")
-        let c = MyType(val: "Third Value")
+        let rowA = MyType(val: "First Value")
+        let rowB = MyType(val: "Second Value")
+        let rowC = MyType(val: "Third Value")
 
-        let values = [a, b, c]
-
-        let sections = SectionBuilder<MyType>(initialValues: []).addSections { _ in
-            return [Section(name: "First", rows: [values[0]])]
+        let sections = SectionBuilder<MyType>(initialValues: [])
+            .addSections { _ in
+                return [Section(name: "First", rows: [rowA])]
             }.addSections { _ in
-                return [Section<MyType>(name: "Second", rows: [values[1]])]
-                    + [Section<MyType>(name: "Third", rows: [values[2]])]
-        }
+                return [Section<MyType>(name: "Second", rows: [rowB])]
+                + [Section<MyType>(name: "Third", rows: [rowC])]
+            }
 
         XCTAssert(sections.sections.count == 3)
 
         XCTAssert(sections.sections[0].name == "First")
-        XCTAssert(sections.sections[0].rows[0] == a)
+        XCTAssert(sections.sections[0].rows[0] == rowA)
         XCTAssert(sections.sections[0].rows.count == 1)
 
         XCTAssert(sections.sections[1].name == "Second")
-        XCTAssert(sections.sections[1].rows[0] == b)
+        XCTAssert(sections.sections[1].rows[0] == rowB)
         XCTAssert(sections.sections[1].rows.count == 1)
 
         XCTAssert(sections.sections[2].name == "Third")
-        XCTAssert(sections.sections[2].rows[0] == c)
+        XCTAssert(sections.sections[2].rows[0] == rowC)
         XCTAssert(sections.sections[2].rows.count == 1)
     }
 }
-
 
 extension SectionsTests.MyType: Equatable {}
 

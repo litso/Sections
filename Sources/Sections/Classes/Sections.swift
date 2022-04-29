@@ -39,8 +39,8 @@ extension Sections: Sequence {
     public typealias Iterator = AnyIterator<Section<T>>
 
     public func makeIterator() -> Sections.Iterator {
-        let g = sections.makeIterator()
-        return AnyIterator(g)
+        let iterator = sections.makeIterator()
+        return AnyIterator(iterator)
     }
 }
 
@@ -81,7 +81,7 @@ extension Sections: RangeReplaceableCollection {
         self.sections = []
     }
 
-    public mutating func replaceSubrange<C : Collection>(_ subRange: Range<Sections.Index>, with newElements: C) where C.Iterator.Element == Iterator.Element {
+    public mutating func replaceSubrange<C: Collection>(_ subRange: Range<Sections.Index>, with newElements: C) where C.Iterator.Element == Iterator.Element {
         self.sections.replaceSubrange(subRange, with: newElements)
     }
 }
