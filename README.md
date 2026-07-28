@@ -13,12 +13,7 @@ To run the example project, clone the repo and open `Example/Sections.xcodeproj`
 
 ## Installation
 
-Sections is available through [CocoaPods](http://cocoapods.org). To install
-it, simply add the following line to your Podfile:
-
-```ruby
-pod "Sections"
-```
+Sections is available through [CocoaPods](http://cocoapods.org) or SPM.
 
 ## Author
 
