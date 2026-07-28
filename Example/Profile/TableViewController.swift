@@ -69,7 +69,7 @@ final class TableViewController: UITableViewController {
         let loggedIn = isLoggedIn
         let friends = friends
 
-        sections = SectionBuilder<SectionID, Row>(initialValues: [])
+        sections = SectionBuilder<SectionID, Row>(initialSections: [])
             .addSections { _ in
                 let items: [Row] = loggedIn ? [.profile, .settings] : [.settings]
                 return [Section(.account, title: "Account", items: items)]

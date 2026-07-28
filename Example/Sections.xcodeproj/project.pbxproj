@@ -9,8 +9,9 @@
 /* Begin PBXBuildFile section */
 		3173C3483019242C00386872 /* Sections in Frameworks */ = {isa = PBXBuildFile; productRef = 3173C3473019242C00386872 /* Sections */; };
 		3173C3633019321D00386872 /* Sections in Frameworks */ = {isa = PBXBuildFile; productRef = 3173C3473019242C00386872 /* Sections */; };
-		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
-		AFED56911D46FB490095C0C0 /* EquatableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFED56901D46FB490095C0C0 /* EquatableTests.swift */; };
+		607FACEC1AFB9204008FA782 /* SectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* SectionTests.swift */; };
+		A10000013019321D00386872 /* SectionBuilderUIKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000033019321D00386872 /* SectionBuilderUIKitTests.swift */; };
+		AFED56911D46FB490095C0C0 /* SectionBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFED56901D46FB490095C0C0 /* SectionBuilderTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,9 +19,10 @@
 		5DEE35FF9DDB61C2A048C7E9 /* Sections.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Sections.podspec; path = ../Sections.podspec; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* Sections_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Sections_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
+		607FACEB1AFB9204008FA782 /* SectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionTests.swift; sourceTree = "<group>"; };
 		7A51CAED75D45C1209C4DD07 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		AFED56901D46FB490095C0C0 /* EquatableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EquatableTests.swift; sourceTree = "<group>"; };
+		A10000033019321D00386872 /* SectionBuilderUIKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionBuilderUIKitTests.swift; sourceTree = "<group>"; };
+		AFED56901D46FB490095C0C0 /* SectionBuilderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionBuilderTests.swift; sourceTree = "<group>"; };
 		F9DA03B35C36CEFBEE28B476 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -80,9 +82,10 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				607FACEB1AFB9204008FA782 /* Tests.swift */,
+				607FACEB1AFB9204008FA782 /* SectionTests.swift */,
+				AFED56901D46FB490095C0C0 /* SectionBuilderTests.swift */,
+				A10000033019321D00386872 /* SectionBuilderUIKitTests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
-				AFED56901D46FB490095C0C0 /* EquatableTests.swift */,
 			);
 			name = Tests;
 			path = ../Tests/SectionsTests;
@@ -222,8 +225,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AFED56911D46FB490095C0C0 /* EquatableTests.swift in Sources */,
-				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				AFED56911D46FB490095C0C0 /* SectionBuilderTests.swift in Sources */,
+				A10000013019321D00386872 /* SectionBuilderUIKitTests.swift in Sources */,
+				607FACEC1AFB9204008FA782 /* SectionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,7 +441,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
@@ -452,7 +456,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
 		};

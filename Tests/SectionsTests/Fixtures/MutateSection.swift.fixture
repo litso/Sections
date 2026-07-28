@@ -1,0 +1,14 @@
+enum SectionID: Hashable {
+    case friends
+}
+
+struct Item: Identifiable {
+    let id: Int
+}
+
+func mutate(_ value: Section<SectionID, Item>) {
+    var section = value
+    section.id = .friends
+    section.title = "Changed"
+    section.items = []
+}
