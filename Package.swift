@@ -17,10 +17,7 @@ let package = Package(
     dependencies: [ ],
     targets: [
         .target(
-            name: "Sections",
-            exclude: [
-                "Info.plist"
-            ]
+            name: "Sections"
         ),
         .testTarget(
             name: "SectionsTests",
