@@ -1,71 +1,71 @@
-import UIKit
-import XCTest
 import Sections
+import XCTest
 
-class SectionsTests: XCTestCase {
-    struct MyType {
-        let val: String
+final class SectionsTests: XCTestCase {
+    private enum SectionID: Hashable {
+        case first
+        case second
+        case third
     }
 
-    /**
-     Test creating two sections from a homogenious data type.
-     */
-    func testSections() {
-        let rowA = MyType(val: "First Value")
-        let rowB = MyType(val: "Second Value")
+    private struct Item: Identifiable {
+        let id: Int
+        let value: String
+    }
 
-        let sections = SectionBuilder<MyType>(initialValues: [])
+    func testSectionInitializer() {
+        let item = Item(id: 1, value: "First Value")
+        let section = Section<SectionID, Item>(.first, title: "First", items: [item])
+
+        XCTAssertEqual(section.id, SectionID.first)
+        XCTAssertEqual(section.title, "First")
+        XCTAssertEqual(section.items.map(\.id), [1])
+        XCTAssertEqual(section.items.map(\.value), ["First Value"])
+    }
+
+    func testSectionTitleDefaultsToNil() {
+        let section = Section<SectionID, Item>(.first, items: [])
+
+        XCTAssertNil(section.title)
+    }
+
+    func testBuilderCreatesSections() {
+        let firstItem = Item(id: 1, value: "First Value")
+        let secondItem = Item(id: 2, value: "Second Value")
+
+        let builder = SectionBuilder<SectionID, Item>(initialValues: [])
             .addSections { _ in
-                return [Section<MyType>(name: "First", rows: [rowA])]
-            }.addSections { _ in
-                return [Section(name: "Second", rows: [rowB])]
+                [Section(.first, title: "First", items: [firstItem])]
+            }
+            .addSections { _ in
+                [Section(.second, title: "Second", items: [secondItem])]
             }
 
-        XCTAssert(sections.sections.count == 2)
-
-        XCTAssert(sections.sections[0].name == "First")
-        XCTAssert(sections.sections[0].rows[0] == rowA)
-        XCTAssert(sections.sections[0].rows.count == 1)
-
-        XCTAssert(sections.sections[1].name == "Second")
-        XCTAssert(sections.sections[1].rows[0] == rowB)
-        XCTAssert(sections.sections[1].rows.count == 1)
+        XCTAssertEqual(builder.sections.map(\.id), [.first, .second])
+        XCTAssertEqual(builder.sections.map(\.title), ["First", "Second"])
+        XCTAssertEqual(builder.sections[0].items.map(\.id), [1])
+        XCTAssertEqual(builder.sections[1].items.map(\.id), [2])
     }
 
-    /**
-     Test returning multiple sections in one closure.
-     */
-    func testSections2() {
-        let rowA = MyType(val: "First Value")
-        let rowB = MyType(val: "Second Value")
-        let rowC = MyType(val: "Third Value")
+    func testBuilderCanReturnMultipleSections() {
+        let items = [
+            Item(id: 1, value: "First Value"),
+            Item(id: 2, value: "Second Value"),
+            Item(id: 3, value: "Third Value")
+        ]
 
-        let sections = SectionBuilder<MyType>(initialValues: [])
+        let builder = SectionBuilder<SectionID, Item>(initialValues: [])
             .addSections { _ in
-                return [Section(name: "First", rows: [rowA])]
-            }.addSections { _ in
-                return [Section<MyType>(name: "Second", rows: [rowB])]
-                + [Section<MyType>(name: "Third", rows: [rowC])]
+                [Section(.first, title: "First", items: [items[0]])]
+            }
+            .addSections { _ in
+                [
+                    Section(.second, title: "Second", items: [items[1]]),
+                    Section(.third, title: "Third", items: [items[2]])
+                ]
             }
 
-        XCTAssert(sections.sections.count == 3)
-
-        XCTAssert(sections.sections[0].name == "First")
-        XCTAssert(sections.sections[0].rows[0] == rowA)
-        XCTAssert(sections.sections[0].rows.count == 1)
-
-        XCTAssert(sections.sections[1].name == "Second")
-        XCTAssert(sections.sections[1].rows[0] == rowB)
-        XCTAssert(sections.sections[1].rows.count == 1)
-
-        XCTAssert(sections.sections[2].name == "Third")
-        XCTAssert(sections.sections[2].rows[0] == rowC)
-        XCTAssert(sections.sections[2].rows.count == 1)
+        XCTAssertEqual(builder.sections.map(\.id), [.first, .second, .third])
+        XCTAssertEqual(builder.sections.map { $0.items.count }, [1, 1, 1])
     }
-}
-
-extension SectionsTests.MyType: Equatable {}
-
-func == (lhs: SectionsTests.MyType, rhs: SectionsTests.MyType) -> Bool {
-    return lhs.val == rhs.val
 }

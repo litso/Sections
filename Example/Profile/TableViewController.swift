@@ -3,31 +3,54 @@ import UIKit
 
 final class TableViewController: UITableViewController {
 
-    private struct Friend: Equatable {
+    private enum SectionID: Hashable {
+        case account
+        case friends
+        case actions
+    }
+
+    private struct Friend {
+        let id: String
         let name: String
         let symbolName: String
         let color: UIColor
-
-        static func == (lhs: Friend, rhs: Friend) -> Bool {
-            lhs.name == rhs.name && lhs.symbolName == rhs.symbolName
-        }
     }
 
-    private enum Row: Equatable {
+    private enum Row: Identifiable {
+        enum ID: Hashable {
+            case profile
+            case settings
+            case friend(String)
+            case authentication
+        }
+
         case profile
         case settings
         case friend(Friend)
         case authentication
+
+        var id: ID {
+            switch self {
+            case .profile:
+                return .profile
+            case .settings:
+                return .settings
+            case .friend(let friend):
+                return .friend(friend.id)
+            case .authentication:
+                return .authentication
+            }
+        }
     }
 
     private let friends = [
-        Friend(name: "Alice Chen", symbolName: "person.crop.circle.fill", color: .systemPink),
-        Friend(name: "Ben Carter", symbolName: "person.crop.circle.fill", color: .systemBlue),
-        Friend(name: "Maya Patel", symbolName: "person.crop.circle.fill", color: .systemOrange)
+        Friend(id: "alice", name: "Alice Chen", symbolName: "person.crop.circle.fill", color: .systemPink),
+        Friend(id: "ben", name: "Ben Carter", symbolName: "person.crop.circle.fill", color: .systemBlue),
+        Friend(id: "maya", name: "Maya Patel", symbolName: "person.crop.circle.fill", color: .systemOrange)
     ]
 
     private var isLoggedIn = true
-    private var sections = Sections<Row>()
+    private var sections: [Section<SectionID, Row>] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,17 +69,17 @@ final class TableViewController: UITableViewController {
         let loggedIn = isLoggedIn
         let friends = friends
 
-        sections = SectionBuilder<Row>(initialValues: [])
+        sections = SectionBuilder<SectionID, Row>(initialValues: [])
             .addSections { _ in
-                let rows: [Row] = loggedIn ? [.profile, .settings] : [.settings]
-                return [Section(name: "Account", rows: rows)]
+                let items: [Row] = loggedIn ? [.profile, .settings] : [.settings]
+                return [Section(.account, title: "Account", items: items)]
             }
             .addSections { _ in
                 guard loggedIn else { return [] }
-                return [Section(name: "Friends", rows: friends.map(Row.friend))]
+                return [Section(.friends, title: "Friends", items: friends.map(Row.friend))]
             }
             .addSections { _ in
-                [Section(name: "Actions", rows: [.authentication])]
+                [Section(.actions, title: "Actions", items: [.authentication])]
             }
             .sections
     }
@@ -76,11 +99,11 @@ final class TableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        sections[section].rows.count
+        sections[section].items.count
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        sections[section].name
+        sections[section].title
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -91,7 +114,7 @@ final class TableViewController: UITableViewController {
             return UITableViewCell()
         }
 
-        switch sections[indexPath.section].rows[indexPath.row] {
+        switch sections[indexPath.section].items[indexPath.row] {
         case .profile:
             cell.configure(
                 title: "Robert Manson",
@@ -129,7 +152,7 @@ final class TableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
-        guard sections[indexPath.section].rows[indexPath.row] == .authentication else { return }
+        guard case .authentication = sections[indexPath.section].items[indexPath.row] else { return }
         setLoggedIn(!isLoggedIn)
     }
 }
