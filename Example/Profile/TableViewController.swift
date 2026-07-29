@@ -3,7 +3,7 @@ import UIKit
 
 final class TableViewController: UITableViewController {
 
-    private enum SectionID: Hashable {
+    private nonisolated enum SectionID: Hashable, Sendable {
         case account
         case friends
         case actions
@@ -17,17 +17,17 @@ final class TableViewController: UITableViewController {
     }
 
     private enum Row: Identifiable {
-        enum ID: Hashable {
+        nonisolated enum ID: Hashable, Sendable {
             case profile
             case settings
             case friend(String)
-            case authentication
+            case authentication(isLoggedIn: Bool)
         }
 
         case profile
         case settings
         case friend(Friend)
-        case authentication
+        case authentication(isLoggedIn: Bool)
 
         var id: ID {
             switch self {
@@ -37,9 +37,28 @@ final class TableViewController: UITableViewController {
                 return .settings
             case .friend(let friend):
                 return .friend(friend.id)
-            case .authentication:
-                return .authentication
+            case .authentication(let isLoggedIn):
+                return .authentication(isLoggedIn: isLoggedIn)
             }
+        }
+    }
+
+    private final class DataSource: UITableViewDiffableDataSource<SectionID, Row.ID> {
+        private let titleProvider: (SectionID) -> String?
+
+        init(
+            tableView: UITableView,
+            titleProvider: @escaping (SectionID) -> String?,
+            cellProvider: @escaping (UITableView, IndexPath, Row.ID) -> UITableViewCell?
+        ) {
+            self.titleProvider = titleProvider
+            super.init(tableView: tableView, cellProvider: cellProvider)
+        }
+
+        override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+            let sectionIdentifiers = snapshot().sectionIdentifiers
+            guard sectionIdentifiers.indices.contains(section) else { return nil }
+            return titleProvider(sectionIdentifiers[section])
         }
     }
 
@@ -50,7 +69,13 @@ final class TableViewController: UITableViewController {
     ]
 
     private var isLoggedIn = true
-    private var sections: [Section<SectionID, Row>] = []
+    private var sections: [Section<SectionID, Row>] = [] {
+        didSet {
+            dataSource.apply(sections.snapshot())
+        }
+    }
+    private var rowsByID: [Row.ID: Row] = [:]
+    private var dataSource: DataSource!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,14 +87,34 @@ final class TableViewController: UITableViewController {
         tableView.estimatedRowHeight = 64
         tableView.cellLayoutMarginsFollowReadableWidth = true
 
+        configureDataSource()
         rebuildSections()
+    }
+
+    private func configureDataSource() {
+        dataSource = DataSource(
+            tableView: tableView,
+            titleProvider: { [weak self] sectionID in
+                self?.sections.first(where: { $0.id == sectionID })?.title
+            },
+            cellProvider: { [weak self] tableView, indexPath, rowID in
+                guard
+                    let self = self,
+                    let row = self.rowsByID[rowID]
+                else {
+                    return nil
+                }
+
+                return self.cell(for: row, in: tableView, at: indexPath)
+            }
+        )
     }
 
     private func rebuildSections() {
         let loggedIn = isLoggedIn
         let friends = friends
 
-        sections = SectionBuilder<SectionID, Row>(initialSections: [])
+        let newSections = SectionBuilder<SectionID, Row>(initialSections: [])
             .addSections { _ in
                 let items: [Row] = loggedIn ? [.profile, .settings] : [.settings]
                 return [Section(.account, title: "Account", items: items)]
@@ -79,9 +124,17 @@ final class TableViewController: UITableViewController {
                 return [Section(.friends, title: "Friends", items: friends.map(Row.friend))]
             }
             .addSections { _ in
-                [Section(.actions, title: "Actions", items: [.authentication])]
+                [Section(.actions, title: "Actions", items: [.authentication(isLoggedIn: loggedIn)])]
             }
             .sections
+
+        rowsByID = Dictionary(
+            uniqueKeysWithValues: newSections.flatMap { section in
+                section.items.map { ($0.id, $0) }
+            }
+        )
+
+        sections = newSections
     }
 
     private func setLoggedIn(_ loggedIn: Bool) {
@@ -89,24 +142,9 @@ final class TableViewController: UITableViewController {
 
         isLoggedIn = loggedIn
         rebuildSections()
-        tableView.reloadData()
     }
 
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        sections.count
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        sections[section].items.count
-    }
-
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        sections[section].title
-    }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    private func cell(for row: Row, in tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: ProfileTableViewCell.reuseIdentifier,
             for: indexPath
@@ -114,7 +152,7 @@ final class TableViewController: UITableViewController {
             return UITableViewCell()
         }
 
-        switch sections[indexPath.section].items[indexPath.row] {
+        switch row {
         case .profile:
             cell.configure(
                 title: "Robert Manson",
@@ -135,7 +173,7 @@ final class TableViewController: UITableViewController {
                 symbolName: friend.symbolName,
                 symbolColor: friend.color
             )
-        case .authentication:
+        case .authentication(let isLoggedIn):
             cell.configure(
                 title: isLoggedIn ? "Log Out" : "Log In",
                 symbolName: isLoggedIn ? "rectangle.portrait.and.arrow.right" : "rectangle.portrait.and.arrow.forward",
@@ -152,7 +190,8 @@ final class TableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
-        guard case .authentication = sections[indexPath.section].items[indexPath.row] else { return }
+        guard let rowID = dataSource.itemIdentifier(for: indexPath) else { return }
+        guard case .authentication = rowID else { return }
         setLoggedIn(!isLoggedIn)
     }
 }
